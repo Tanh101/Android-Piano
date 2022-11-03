@@ -13,8 +13,5 @@ public class Key {
         this.down = down;
     }
 
-    public Key(int sound, RectF rect) {
-        this.sound = sound;
-        this.rect = rect;
-    }
+
 }

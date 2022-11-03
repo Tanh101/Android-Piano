@@ -23,7 +23,7 @@ public class PianoView extends View {
 
     private int keyWidth, keyHeight;
 
-    Paint blackPen, whitePen;
+    Paint blackPen, whitePen, yellowPen;
 
 
     public PianoView(Context context, @Nullable AttributeSet attrs) {
@@ -38,6 +38,10 @@ public class PianoView extends View {
         blackPen = new Paint();
         blackPen.setStyle(Paint.Style.FILL);
         blackPen.setColor(Color.BLACK);
+
+        yellowPen = new Paint();
+        yellowPen.setStyle(Paint.Style.FILL);
+        yellowPen.setColor(Color.YELLOW);
 
 
     }
@@ -54,14 +58,14 @@ public class PianoView extends View {
             int right = left + keyWidth;
 
             RectF rectF = new RectF(left, 0, right, h);
-            whites.add(new Key(i + 1, rectF));
+            whites.add(new Key(i + 1, rectF, false));
 
             if (i != 0 && i != 3 && i != 7 && i != 10) {
                 rectF = new RectF((float) (i - 1) * keyWidth + 0.75f * keyWidth,
                         0,
                         (float) i * keyWidth + 0.25f * keyWidth,
                         0.67f * keyHeight);
-                blacks.add(new Key(blackCount, rectF));
+                blacks.add(new Key(blackCount, rectF, false));
                 blackCount++;
             }
 
@@ -72,7 +76,7 @@ public class PianoView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for (Key k : whites) {
-            canvas.drawRect(k.rect, whitePen);
+            canvas.drawRect(k.rect, k.down ? yellowPen : whitePen);
         }
 
         for (int i = 0; i < NUMBER_OF_KEY; ++i) {
@@ -80,7 +84,7 @@ public class PianoView extends View {
         }
 
         for (Key k : blacks) {
-            canvas.drawRect(k.rect, blackPen);
+            canvas.drawRect(k.rect, k.down ? yellowPen : blackPen);
         }
     }
 
